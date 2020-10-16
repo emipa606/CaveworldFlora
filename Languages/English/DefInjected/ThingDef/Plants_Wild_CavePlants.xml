@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <StoneGrass.label>stone grass</StoneGrass.label>
+  <StoneGrass.description>This kind of grass only grows in deep and dark caves. The soft light emanating from a field of stone grass is appeasing.</StoneGrass.description>
+
+  <GiantLeaf.label>giant leaf</GiantLeaf.label>
+  <GiantLeaf.description>A giant and very impressive leaf. Gathering water and mineral elements from the ground, it can be prepared as a soup.</GiantLeaf.description>
+
+
+  <!-- If you experience lags with dynamic devil's tongue, you can remove the following definition and use the commented one just below. -->
+
+  <DevilTongue.label>devil's tongue</DevilTongue.label>
+  <DevilTongue.description>Local tribesmen call these plants "devil's tongue" because of their color. They also know that when their light goes down, something is approaching... threat or foe?</DevilTongue.description>
+
+
+  <!-- "Static" devil's tongue (remove the comment tags).
+  <ThingDef ParentName="CaveWorldPlantBase" Class="CaveworldFlora.ThingDef_ClusterPlant">
+    <defName>DevilTongue</defName>
+    <label>devil's tongue</label>
+    <description>Local tribesmen call these plants "devil's tongue" because of their color. They also know that when their light goes down, something is approaching... threat or foe?</description>
+    <thingClass>CaveworldFlora.ClusterPlant</thingClass>
+    <tickerType>Long</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Beauty>10</Beauty>
+      <Nutrition>0.0</Nutrition>
+    </statBases>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>Things/Plant/DevilTongue/Body</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <shadowData>
+        <volume>(0.6, 0.2, 0.6)</volume>
+      </shadowData>
+    </graphicData>
+    <selectable>true</selectable>
+    <fillPercent>0.25</fillPercent>
+    <pathCost>30</pathCost>
+    <ingestible>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <harvestWork>400</harvestWork>
+      <harvestAfterGrowth>0.15</harvestAfterGrowth>
+      <harvestedThingDef>Cloth</harvestedThingDef>
+      <harvestYield>10</harvestYield>
+      <harvestTag>Standard</harvestTag>
+      <visualSizeRange>0.8~1.0</visualSizeRange>
+      <growDays>5.0</growDays>
+      <reproduceMtbDays>0.5</reproduceMtbDays>
+      <topWindExposure>0</topWindExposure>
+    </plant>
+
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
+    <minGrowTemperature>10</minGrowTemperature>
+    <minOptimalGrowTemperature>20</minOptimalGrowTemperature>
+    <maxOptimalGrowTemperature>50</maxOptimalGrowTemperature>
+    <maxGrowTemperature>60</maxGrowTemperature>
+    <hasStaticGlower>true</hasStaticGlower>
+    <hasDynamicGlower>false</hasDynamicGlower>
+    <growOnlyOnRoughRock>false</growOnlyOnRoughRock>
+    <growOnlyUndeRoof>false</growOnlyUndeRoof>
+    <growOnlyNearNaturalRock>false</growOnlyNearNaturalRock>
+    <minFertility>0.05</minFertility>
+    <maxFertility>999.0</maxFertility>
+    <minLight>0.0</minLight>
+    <maxLight>0.6</maxLight>
+    <clusterSizeRange>
+      <min>5</min>
+      <max>10</max>
+    </clusterSizeRange>
+    <clusterSpawnRadius>5.0</clusterSpawnRadius>
+    <clusterExclusivityRadiusOffset>0</clusterExclusivityRadiusOffset>
+    <clusterExclusivityRadiusFactor>3</clusterExclusivityRadiusFactor>
+    <isSymbiosisPlant>false</isSymbiosisPlant>
+    <symbiosisPlantDefEvolution>BlackLotus</symbiosisPlantDefEvolution>
+  </ThingDef> -->
+
+  <BlackLotus.label>black lotus</BlackLotus.label>
+  <BlackLotus.description>A beautiful and very impressive plant, the black lotus slowly growths a single massive flower. Be careful as the pheromons emanating from it are extremely toxic.</BlackLotus.description>
+
+  <CaveVine.label>cave vine</CaveVine.label>
+  <CaveVine.description>A tortured cave vine growing really slowly. Its branches are really tough thanks to the numerous underground minerals this plant absorbs.</CaveVine.description>
+
+  <CaveLace.label>cave lace</CaveLace.label>
+  <CaveLace.description>A rapid growing and aerial liana. One can almost see through its delicate and fragile branches.</CaveLace.description>
+
+
+</LanguageData>
