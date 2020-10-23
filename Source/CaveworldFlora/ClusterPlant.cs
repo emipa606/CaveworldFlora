@@ -116,11 +116,11 @@ namespace CaveworldFlora
         {
             get
             {
-                if (ClusterPlantProps.isSymbiosisPlant == false)
+                if (ClusterPlantProps?.isSymbiosisPlant == false)
                 {
                     return true;
                 }
-                return (cluster.symbiosisCluster.DestroyedOrNull() == false);
+                return (cluster?.symbiosisCluster?.DestroyedOrNull() == false);
             }
         }
 
@@ -504,7 +504,7 @@ namespace CaveworldFlora
                         }
                         if (ClusterPlantProps.isSymbiosisPlant)
                         {
-                            if (IsSymbiosisOk == false)
+                            if (!IsSymbiosisOk)
                             {
                                 stringBuilder.Append(", " + "CaveworldFlora.BrokenSymbiosis".Translate());
                             }
