@@ -1,31 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using UnityEngine;   // Always needed
-using RimWorld;      // RimWorld specific functions are found here
-using Verse;         // RimWorld universal objects are here
+﻿using UnityEngine;
+using Verse;
+// Always needed
+// RimWorld universal objects are here
 //using Verse.AI;    // Needed when you do something with the AI
-using Verse.Sound;   // Needed when you do something with the Sound
 
 namespace CaveworldFlora
 {
     /// <summary>
-    /// ClusterPlant_DevilTongue class.
+    ///     ClusterPlant_DevilTongue class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>
+    ///     Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
+    ///     Remember learning is always better than just copy/paste...
+    /// </permission>
     [StaticConstructorOnStartup]
     public class ClusterPlant_DevilTongue : ClusterPlant
     {
-        protected const float pawnDetectionRadius = 5f;
-        protected const int pawnDetectionPeriodWhenOpenedInTicks = GenTicks.TicksPerRealSecond;
-        protected const int pawnDetectionPeriodWhenClosedInTicks = 5 * GenTicks.TicksPerRealSecond;
-        protected const int flowerClosingDurationInTicks = 1 * GenTicks.TicksPerRealSecond;
-        protected const int flowerOpeningDurationInTicks = 5 * GenTicks.TicksPerRealSecond;
-
         public enum FlowerState
         {
             closed,
@@ -34,40 +25,48 @@ namespace CaveworldFlora
             closing
         }
 
+        protected const float pawnDetectionRadius = 5f;
+        protected const int pawnDetectionPeriodWhenOpenedInTicks = GenTicks.TicksPerRealSecond;
+        protected const int pawnDetectionPeriodWhenClosedInTicks = 5 * GenTicks.TicksPerRealSecond;
+        protected const int flowerClosingDurationInTicks = 1 * GenTicks.TicksPerRealSecond;
+        protected const int flowerOpeningDurationInTicks = 5 * GenTicks.TicksPerRealSecond;
+
+        // Drawing.
+        public static readonly Material flowerTexture = MaterialPool.MatFrom(
+            "Things/Plant/DevilTongue/Flower/DevilTongueFlower",
+            ShaderDatabase.Transparent);
+
+        public int flowerClosingRemainingTicks;
+        public Matrix4x4 flowerMatrix;
+        public int flowerOpeningTicks;
+        public Vector3 flowerScale = new Vector3(0f, 1f, 0f);
+
         // Flower state.
         public FlowerState flowerState = FlowerState.closed;
 
         public int nextLongTick = GenTicks.TickLongInterval;
-        public int nextNearbyPawnCheckTick = 0;
+        public int nextNearbyPawnCheckTick;
 
-        public int flowerClosingRemainingTicks = 0;
-        public int flowerOpeningTicks = 0;
-
-        // Drawing.
-        public static Material flowerTexture = MaterialPool.MatFrom("Things/Plant/DevilTongue/Flower/DevilTongueFlower", ShaderDatabase.Transparent);
-        public Matrix4x4 flowerMatrix = default(Matrix4x4);
-        public Vector3 flowerScale = new Vector3(0f, 1f, 0f);
-        
         // ===================== Saving =====================
         /// <summary>
-        /// Save and load internal state variables (stored in savegame data).
+        ///     Save and load internal state variables (stored in savegame data).
         /// </summary>
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<int>(ref nextLongTick, "nextLongTick");
-            Scribe_Values.Look<int>(ref nextNearbyPawnCheckTick, "nextNearbyPawnCheckTick");
-            Scribe_Values.Look<FlowerState>(ref flowerState, "flowerState");
-            Scribe_Values.Look<int>(ref flowerClosingRemainingTicks, "flowerClosingRemainingTicks");
-            Scribe_Values.Look<int>(ref flowerOpeningTicks, "flowerOpeningTicks");
-            Scribe_Values.Look<Vector3>(ref flowerScale, "flowerScale");
+            Scribe_Values.Look(ref nextLongTick, "nextLongTick");
+            Scribe_Values.Look(ref nextNearbyPawnCheckTick, "nextNearbyPawnCheckTick");
+            Scribe_Values.Look(ref flowerState, "flowerState");
+            Scribe_Values.Look(ref flowerClosingRemainingTicks, "flowerClosingRemainingTicks");
+            Scribe_Values.Look(ref flowerOpeningTicks, "flowerOpeningTicks");
+            Scribe_Values.Look(ref flowerScale, "flowerScale");
         }
 
         // ===================== Main Work Function =====================
         /// <summary>
-        /// Main function:
-        /// - look for nearby pawn: if any is found, close flower and glower.
-        /// - when pawn is away, re-open flower after a delay.
+        ///     Main function:
+        ///     - look for nearby pawn: if any is found, close flower and glower.
+        ///     - when pawn is away, re-open flower after a delay.
         /// </summary>
         public override void Tick()
         {
@@ -77,10 +76,11 @@ namespace CaveworldFlora
                 base.TickLong();
             }
 
-            if (base.Destroyed)
+            if (Destroyed)
             {
                 return;
             }
+
             switch (flowerState)
             {
                 case FlowerState.closed:
@@ -88,10 +88,12 @@ namespace CaveworldFlora
                     {
                         break;
                     }
+
                     if (growthInt < 0.3f)
                     {
                         break;
                     }
+
                     LookForNearbyPawnWhenClosed();
                     break;
                 case FlowerState.opening:
@@ -103,6 +105,7 @@ namespace CaveworldFlora
                         TransitionToClosing();
                         break;
                     }
+
                     LookForNearbyPawnWhenOpened();
                     break;
                 case FlowerState.closing:
@@ -113,16 +116,18 @@ namespace CaveworldFlora
 
         protected void LookForNearbyPawnWhenClosed()
         {
-            if (Find.TickManager.TicksGame >= nextNearbyPawnCheckTick)
+            if (Find.TickManager.TicksGame < nextNearbyPawnCheckTick)
             {
-                if (IsPawnNearby())
-                {
-                    nextNearbyPawnCheckTick = Find.TickManager.TicksGame + pawnDetectionPeriodWhenClosedInTicks;
-                }
-                else
-                {
-                    TransitionToOpening();
-                }
+                return;
+            }
+
+            if (IsPawnNearby())
+            {
+                nextNearbyPawnCheckTick = Find.TickManager.TicksGame + pawnDetectionPeriodWhenClosedInTicks;
+            }
+            else
+            {
+                TransitionToOpening();
             }
         }
 
@@ -140,8 +145,10 @@ namespace CaveworldFlora
             {
                 TransitionToOpened();
             }
-            float scale = ((float)flowerOpeningTicks / (float)flowerOpeningDurationInTicks);
-            float growthFactor = def.plant.visualSizeRange.min + growthInt * (def.plant.visualSizeRange.max - def.plant.visualSizeRange.min);
+
+            var scale = flowerOpeningTicks / (float) flowerOpeningDurationInTicks;
+            var growthFactor = def.plant.visualSizeRange.min +
+                               (growthInt * (def.plant.visualSizeRange.max - def.plant.visualSizeRange.min));
             scale *= growthFactor;
             flowerScale.x = scale;
             flowerScale.z = scale;
@@ -155,27 +162,31 @@ namespace CaveworldFlora
 
         protected void LookForNearbyPawnWhenOpened()
         {
-            if (Find.TickManager.TicksGame >= nextNearbyPawnCheckTick)
+            if (Find.TickManager.TicksGame < nextNearbyPawnCheckTick)
             {
-                if (IsPawnNearby())
-                {
-                    TransitionToClosing();
-                }
-                else
-                {
-                    nextNearbyPawnCheckTick = Find.TickManager.TicksGame + pawnDetectionPeriodWhenOpenedInTicks;
-                }
+                return;
+            }
+
+            if (IsPawnNearby())
+            {
+                TransitionToClosing();
+            }
+            else
+            {
+                nextNearbyPawnCheckTick = Find.TickManager.TicksGame + pawnDetectionPeriodWhenOpenedInTicks;
             }
         }
+
         protected bool IsPawnNearby()
         {
-            foreach (Pawn pawn in Map.mapPawns.AllPawns)
+            foreach (var pawn in Map.mapPawns.AllPawns)
             {
                 if (pawn.Position.InHorDistOf(Position, pawnDetectionRadius))
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -193,7 +204,8 @@ namespace CaveworldFlora
             {
                 TransitionToClosed();
             }
-            float scale = ((float)flowerClosingRemainingTicks / (float)flowerClosingDurationInTicks);
+
+            var scale = flowerClosingRemainingTicks / (float) flowerClosingDurationInTicks;
             flowerScale.x = scale;
             flowerScale.z = scale;
         }
@@ -203,15 +215,18 @@ namespace CaveworldFlora
             nextNearbyPawnCheckTick = Find.TickManager.TicksGame + pawnDetectionPeriodWhenClosedInTicks;
             flowerState = FlowerState.closed;
         }
-        
+
         public override void Draw()
         {
-            if (flowerState != FlowerState.closed)
+            if (flowerState == FlowerState.closed)
             {
-                // Draw flower just under body texture.
-                flowerMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, -0.1f, 0f), (0f).ToQuat(), flowerScale);
-                Graphics.DrawMesh(MeshPool.plane10, flowerMatrix, flowerTexture, 0);
+                return;
             }
+
+            // Draw flower just under body texture.
+            flowerMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, -0.1f, 0f), 0f.ToQuat(),
+                flowerScale);
+            Graphics.DrawMesh(MeshPool.plane10, flowerMatrix, flowerTexture, 0);
         }
     }
 }

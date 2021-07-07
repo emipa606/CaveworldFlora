@@ -1,47 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
   <ShimmershroomGlowerSmall.label>glowing shimmershroom</ShimmershroomGlowerSmall.label>
   <ShimmershroomGlowerSmall.description>A small shimmershroom glower.</ShimmershroomGlowerSmall.description>
-
   <ShimmershroomGlowerMedium.label>glowing shimmershroom</ShimmershroomGlowerMedium.label>
   <ShimmershroomGlowerMedium.description>A medium shimmershroom glower.</ShimmershroomGlowerMedium.description>
-
   <ShimmershroomGlowerBig.label>glowing shimmershroom</ShimmershroomGlowerBig.label>
   <ShimmershroomGlowerBig.description>A big shimmershroom glower.</ShimmershroomGlowerBig.description>
-
   <GlowbulbGlowerSmall.label>glowing glowbulb</GlowbulbGlowerSmall.label>
   <GlowbulbGlowerSmall.description>A small glowbulb glower.</GlowbulbGlowerSmall.description>
-
   <GlowbulbGlowerMedium.label>glowing glowbulb</GlowbulbGlowerMedium.label>
   <GlowbulbGlowerMedium.description>A medium glowbulb glower.</GlowbulbGlowerMedium.description>
-
   <GlowbulbGlowerBig.label>glowing glowbulb</GlowbulbGlowerBig.label>
   <GlowbulbGlowerBig.description>A big glowbulb glower.</GlowbulbGlowerBig.description>
-
   <GleamcapGlowerSmall.label>glowing gleamcap</GleamcapGlowerSmall.label>
   <GleamcapGlowerSmall.description>A small gleamcap glower.</GleamcapGlowerSmall.description>
-
   <GleamcapGlowerMedium.label>glowing gleamcap</GleamcapGlowerMedium.label>
   <GleamcapGlowerMedium.description>A medium gleamcap glower.</GleamcapGlowerMedium.description>
-
   <GleamcapGlowerBig.label>glowing gleamcap</GleamcapGlowerBig.label>
   <GleamcapGlowerBig.description>A big gleamcap glower.</GleamcapGlowerBig.description>
-
   <GleamcapSporeSpawner.label>spores</GleamcapSporeSpawner.label>
   <GleamcapSporeSpawner.description>Building used to spawn gleamcap spores.</GleamcapSporeSpawner.description>
-
-
   <!-- Brightbells -->
-
   <BrightbellsGlowerSmall.label>glowing brightbells</BrightbellsGlowerSmall.label>
   <BrightbellsGlowerSmall.description>A small shimmershroom glower.</BrightbellsGlowerSmall.description>
-
   <BrightbellsGlowerMedium.label>glowing brightbells</BrightbellsGlowerMedium.label>
   <BrightbellsGlowerMedium.description>A medium shimmershroom glower.</BrightbellsGlowerMedium.description>
-
   <BrightbellsGlowerBig.label>glowing brightbells</BrightbellsGlowerBig.label>
   <BrightbellsGlowerBig.description>A big shimmershroom glower.</BrightbellsGlowerBig.description>
-
-
 </LanguageData>
