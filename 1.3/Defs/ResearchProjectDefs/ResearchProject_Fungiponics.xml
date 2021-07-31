@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>ResearchFungiponics</defName>
+    <label>fungiponics</label>
+    <description>Research how to grow delicate cave plants.</description>
+    <techLevel>Neolithic</techLevel>
+    <baseCost>1200</baseCost>
+  </ResearchProjectDef>
+</Defs>

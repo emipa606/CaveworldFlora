@@ -1,5 +1,8 @@
 # Changelog for CaveworldFlora
 
+1.0.4.0 - Fungi should now fulfill the Fungi-need in Ideology
+
+
 1.0.3.0 - Mod updated for 1.3 and passed autotests
 
 
