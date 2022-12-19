@@ -52,22 +52,26 @@ public class ClusterPlant_BlackLotus : ClusterPlant
 
             // Poison nearby pawns.
             var allPawnsSpawned = Map.mapPawns.AllPawnsSpawned;
-            foreach (var pawn in allPawnsSpawned)
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (var index = 0; index < allPawnsSpawned.Count; index++)
             {
+                var pawn = allPawnsSpawned[index];
                 if (!pawn.Position.InHorDistOf(Position, poisonRadius))
                 {
                     continue;
                 }
 
-                var num = 0.01f;
-                num /= Mathf.Max(pawn.GetStatValue(StatDefOf.ToxicResistance), 0.01f);
-                if (num == 0f)
-                {
-                    continue;
-                }
+
+                var toxicResistance = pawn.GetStatValue(Util_CaveworldFlora.BiotechInstalled
+                    ? StatDefOf.ToxicEnvironmentResistance
+                    : StatDefOf.ToxicResistance);
+
+                var num = 1 - toxicResistance;
+                num /= 100;
 
                 var num2 = Mathf.Lerp(0.85f, 1.15f, Rand.ValueSeeded(pawn.thingIDNumber ^ 74374237));
                 num *= num2;
+
                 HealthUtility.AdjustSeverity(pawn, HediffDefOf.ToxicBuildup, num);
                 if (alertHasBeenSent || !pawn.IsColonist)
                 {

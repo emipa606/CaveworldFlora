@@ -17,6 +17,13 @@ namespace CaveworldFlora;
 /// </permission>
 public static class Util_CaveworldFlora
 {
+    public static bool BiotechInstalled;
+
+    static Util_CaveworldFlora()
+    {
+        BiotechInstalled = ModLister.BiotechInstalled;
+    }
+
     // Fungiponics buiding.
     public static ThingDef FungiponicsBasinDef => ThingDef.Named("FungiponicsBasin");
 
@@ -35,25 +42,21 @@ public static class Util_CaveworldFlora
     // Glowers.
     public static ThingDef GetGlowerStaticDef(ThingDef plantDef)
     {
-        var glowerDefName = plantDef.defName + "Glower";
-        return ThingDef.Named(glowerDefName);
+        return ThingDef.Named($"{plantDef.defName}Glower");
     }
 
     public static ThingDef GetGlowerSmallDef(ThingDef plantDef)
     {
-        var glowerDefName = plantDef.defName + "GlowerSmall";
-        return ThingDef.Named(glowerDefName);
+        return ThingDef.Named($"{plantDef.defName}GlowerSmall");
     }
 
     public static ThingDef GetGlowerMediumDef(ThingDef plantDef)
     {
-        var glowerDefName = plantDef.defName + "GlowerMedium";
-        return ThingDef.Named(glowerDefName);
+        return ThingDef.Named($"{plantDef.defName}GlowerMedium");
     }
 
     public static ThingDef GetGlowerBigDef(ThingDef plantDef)
     {
-        var glowerDefName = plantDef.defName + "GlowerBig";
-        return ThingDef.Named(glowerDefName);
+        return ThingDef.Named($"{plantDef.defName}GlowerBig");
     }
 }

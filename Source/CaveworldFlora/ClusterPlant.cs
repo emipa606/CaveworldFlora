@@ -268,14 +268,6 @@ public class ClusterPlant : Plant
     }
 
     // ===================== Setup Work =====================
-    /// <summary>
-    ///     Initialize instance variables.
-    /// </summary>
-    public override void SpawnSetup(Map map, bool respawningAfterLoad)
-    {
-        base.SpawnSetup(map, respawningAfterLoad);
-        //this.UpdateGlowerAccordingToGrowth(); // TODO: disabled to avoid ton of warning messages when getting temperature.
-    }
 
     /// <summary>
     ///     Save and load internal state variables (stored in savegame data).
