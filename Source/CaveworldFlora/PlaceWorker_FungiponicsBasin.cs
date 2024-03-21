@@ -22,7 +22,7 @@ public class PlaceWorker_FungiponicsBasin : PlaceWorker
     /// <summary>
     ///     Check if a new fungiponics basin can be built at this location.
     ///     - the fungiponics basin must be roofed.
-    ///     - must not be too near from another fungiponics basin.
+    ///     - must not be too near to fungiponics basin.
     /// </summary>
     public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map,
         Thing thingToIgnore = null, Thing thing = null)

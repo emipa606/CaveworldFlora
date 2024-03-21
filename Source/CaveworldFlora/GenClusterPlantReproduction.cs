@@ -24,19 +24,21 @@ public static class GenClusterPlantReproduction
     {
         spawnCell = IntVec3.Invalid;
 
+        var validCellIsFound = CellFinderLoose.TryGetRandomCellWith(validator, map, 1000, out spawnCell);
+        if (validCellIsFound == false)
+        {
+            // Just for robustness, TryGetRandomCellWith set result to IntVec3.Invalid if no valid cell is found.
+            spawnCell = IntVec3.Invalid;
+        }
+
+        return;
+
         bool validator(IntVec3 cell)
         {
             // Check a plant can be spawned here.
             return IsValidPositionToGrowPlant(plantDef, map, cell, checkTemperature) &&
                    // Check there is no third cluster nearby.
                    IsClusterAreaClear(plantDef, newDesiredClusterSize, map, cell);
-        }
-
-        var validCellIsFound = CellFinderLoose.TryGetRandomCellWith(validator, map, 1000, out spawnCell);
-        if (validCellIsFound == false)
-        {
-            // Just for robustness, TryGetRandomCellWith set result to IntVec3.Invalid if no valid cell is found.
-            spawnCell = IntVec3.Invalid;
         }
     }
 
@@ -90,6 +92,16 @@ public static class GenClusterPlantReproduction
             GenRadial.RadiusOfNumCells(cluster.actualSize + 1); // Min radius to hold cluster's plants + new plant.
         maxSpawnDistance += 2f; // Add a margin so the cluster does not have a perfect circle shape.
 
+        var validCellIsFound = CellFinder.TryFindRandomCellNear(cluster.Position, cluster.Map,
+            (int)maxSpawnDistance, validator, out spawnCell);
+        if (validCellIsFound == false)
+        {
+            // Note that TryFindRandomCellNear set result to root if no valid cell is found!
+            spawnCell = IntVec3.Invalid;
+        }
+
+        return;
+
         bool validator(IntVec3 cell)
         {
             // Check cell is not too far away from current cluster.
@@ -108,14 +120,6 @@ public static class GenClusterPlantReproduction
             }
 
             return IsValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell, checkTemperature);
-        }
-
-        var validCellIsFound = CellFinder.TryFindRandomCellNear(cluster.Position, cluster.Map,
-            (int)maxSpawnDistance, validator, out spawnCell);
-        if (validCellIsFound == false)
-        {
-            // Note that TryFindRandomCellNear set result to root if no valid cell is found!
-            spawnCell = IntVec3.Invalid;
         }
     }
 
@@ -144,6 +148,16 @@ public static class GenClusterPlantReproduction
         var newClusterMinDistance = cluster.ExclusivityRadius + newClusterExclusivityRadius;
         var newClusterMaxDistance = 2f * newClusterMinDistance;
 
+        var validCellIsFound = CellFinder.TryFindRandomCellNear(cluster.Position, cluster.Map,
+            (int)newClusterMaxDistance, validator, out spawnCell);
+        if (validCellIsFound == false)
+        {
+            // Note that TryFindRandomCellNear set result to root if no valid cell is found!
+            spawnCell = IntVec3.Invalid;
+        }
+
+        return;
+
         bool validator(IntVec3 cell)
         {
             // Check cell is not too close from current cluster.
@@ -168,14 +182,6 @@ public static class GenClusterPlantReproduction
             return IsValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell) &&
                    // Check there is no third cluster nearby.
                    IsClusterAreaClear(cluster.plantDef, newDesiredClusterSize, cluster.Map, cell);
-        }
-
-        var validCellIsFound = CellFinder.TryFindRandomCellNear(cluster.Position, cluster.Map,
-            (int)newClusterMaxDistance, validator, out spawnCell);
-        if (validCellIsFound == false)
-        {
-            // Note that TryFindRandomCellNear set result to root if no valid cell is found!
-            spawnCell = IntVec3.Invalid;
         }
     }
 

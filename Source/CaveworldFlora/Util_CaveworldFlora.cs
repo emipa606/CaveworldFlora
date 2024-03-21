@@ -17,7 +17,7 @@ namespace CaveworldFlora;
 /// </permission>
 public static class Util_CaveworldFlora
 {
-    public static bool BiotechInstalled;
+    public static readonly bool BiotechInstalled;
 
     static Util_CaveworldFlora()
     {

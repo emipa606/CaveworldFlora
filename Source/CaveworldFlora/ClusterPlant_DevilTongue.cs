@@ -216,7 +216,7 @@ public class ClusterPlant_DevilTongue : ClusterPlant
         flowerState = FlowerState.closed;
     }
 
-    public override void Draw()
+    protected override void DrawAt(Vector3 drawLoc, bool flip = false)
     {
         if (flowerState == FlowerState.closed)
         {
@@ -224,7 +224,7 @@ public class ClusterPlant_DevilTongue : ClusterPlant
         }
 
         // Draw flower just under body texture.
-        flowerMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, -0.1f, 0f), 0f.ToQuat(),
+        flowerMatrix.SetTRS(drawLoc + Altitudes.AltIncVect + new Vector3(0f, -0.1f, 0f), 0f.ToQuat(),
             flowerScale);
         Graphics.DrawMesh(MeshPool.plane10, flowerMatrix, flowerTexture, 0);
     }

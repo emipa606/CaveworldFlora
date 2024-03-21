@@ -75,7 +75,7 @@ public class ClusterPlant : Plant
     {
         get
         {
-            var light = Map.glowGrid.GameGlowAt(Position);
+            var light = Map.glowGrid.GroundGlowAt(Position);
             if (light >= ClusterPlantProps.minLight
                 && light <= ClusterPlantProps.maxLight)
             {
@@ -310,7 +310,7 @@ public class ClusterPlant : Plant
                 && LifeStage == PlantLifeStage.Mature)
             {
                 // Plant just became mature.
-                Map.mapDrawer.MapMeshDirty(Position, MapMeshFlag.Things);
+                Map.mapDrawer.MapMeshDirty(Position, MapMeshFlagDefOf.Things);
             }
         }
 
@@ -445,7 +445,7 @@ public class ClusterPlant : Plant
 
                 if (IsLightConditionOk == false)
                 {
-                    var light = Map.glowGrid.GameGlowAt(Position);
+                    var light = Map.glowGrid.GroundGlowAt(Position);
                     if (light < ClusterPlantProps.minLight)
                     {
                         stringBuilder.Append(", " + "CaveworldFlora.TooDark".Translate());
@@ -519,13 +519,18 @@ public class ClusterPlant : Plant
 
     public static bool IsLightConditionOkAt(ThingDef_ClusterPlant plantDef, Map map, IntVec3 position)
     {
-        var light = map.glowGrid.GameGlowAt(position);
+        var light = map.glowGrid.GroundGlowAt(position);
         return light >= plantDef.minLight
                && light <= plantDef.maxLight;
     }
 
     public static bool IsTemperatureConditionOkAt(ThingDef_ClusterPlant plantDef, Map map, IntVec3 position)
     {
+        if (map == null || plantDef == null)
+        {
+            return false;
+        }
+
         var temperature = position.GetTemperature(map);
         return temperature >= plantDef.minGrowTemperature
                && temperature <= plantDef.maxGrowTemperature;

@@ -15,15 +15,11 @@ namespace CaveworldFlora;
 ///     Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
 ///     Remember learning is always better than just copy/paste...
 /// </permission>
-public class MapComponent_ClusterPlant : MapComponent
+public class MapComponent_ClusterPlant(Map map) : MapComponent(map)
 {
     public List<ThingDef_ClusterPlant> cavePlantDefsInternal;
     public int nextRandomSpawnTick = 10;
     public int randomSpawnPeriodInTicks;
-
-    public MapComponent_ClusterPlant(Map map) : base(map)
-    {
-    }
 
     public List<ThingDef_ClusterPlant> CavePlantDefs
     {
@@ -34,7 +30,7 @@ public class MapComponent_ClusterPlant : MapComponent
                 return cavePlantDefsInternal;
             }
 
-            cavePlantDefsInternal = new List<ThingDef_ClusterPlant>();
+            cavePlantDefsInternal = [];
             foreach (var plantDef in DefDatabase<ThingDef>.AllDefs)
             {
                 if (plantDef.category != ThingCategory.Plant)
