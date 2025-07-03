@@ -16,9 +16,9 @@ namespace CaveworldFlora;
 /// </permission>
 public class ClusterPlant_Gleamcap : ClusterPlant
 {
-    public const float chanceToSpawnSpore = 0.01f;
-    public const int minDelayBetweenSporeSpawnInTicks = GenDate.TicksPerDay / 2;
-    public int lastSporeSpawnTick;
+    private const float chanceToSpawnSpore = 0.01f;
+    private const int minDelayBetweenSporeSpawnInTicks = GenDate.TicksPerDay / 2;
+    private int lastSporeSpawnTick;
     public GleamcapSporeSpawner sporeSpawner;
 
     // ===================== Saving =====================
@@ -38,7 +38,7 @@ public class ClusterPlant_Gleamcap : ClusterPlant
     /// </summary>
     public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
     {
-        if (sporeSpawner.DestroyedOrNull() == false)
+        if (!sporeSpawner.DestroyedOrNull())
         {
             sporeSpawner.Destroy();
         }
@@ -56,13 +56,13 @@ public class ClusterPlant_Gleamcap : ClusterPlant
     {
         base.TickLong();
 
-        TrySpawnSporeSpawner();
+        trySpawnSporeSpawner();
     }
 
     /// <summary>
     ///     Try to spawn some spores if the plant is mature.
     /// </summary>
-    public void TrySpawnSporeSpawner()
+    private void trySpawnSporeSpawner()
     {
         var sporeSpawnOccuredLongAgo = lastSporeSpawnTick == 0
                                        || Find.TickManager.TicksGame - lastSporeSpawnTick >

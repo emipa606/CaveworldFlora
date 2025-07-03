@@ -44,11 +44,11 @@ public class ClusterPlant_BlackLotus : ClusterPlant
     public override void TickRare()
     {
         if (Growth >= minGrowthToPoison
-            && Dying == false
-            && IsInCryostasis == false)
+            && !Dying
+            && !IsInCryostasis)
         {
             // Spawn toxic gas.
-            ThrowPoisonSmoke();
+            throwPoisonSmoke();
 
             // Poison nearby pawns.
             var allPawnsSpawned = Map.mapPawns.AllPawnsSpawned;
@@ -94,7 +94,7 @@ public class ClusterPlant_BlackLotus : ClusterPlant
         base.TickLong();
     }
 
-    public void ThrowPoisonSmoke()
+    private void throwPoisonSmoke()
     {
         var spawnPosition = Position.ToVector3Shifted() + Vector3Utility.RandomHorizontalOffset(3f);
 

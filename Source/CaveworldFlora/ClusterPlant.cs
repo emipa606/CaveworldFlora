@@ -28,20 +28,20 @@ public class ClusterPlant : Plant
     public Cluster cluster;
 
     // Glower.
-    public Thing glower;
+    protected Thing glower;
 
-    public ThingDef_ClusterPlant ClusterPlantProps => def as ThingDef_ClusterPlant;
+    private ThingDef_ClusterPlant ClusterPlantProps => def as ThingDef_ClusterPlant;
 
     // Fertility.
-    public float FertilityGrowthRateFactor =>
+    private float FertilityGrowthRateFactor =>
         ClusterPlantProps.growOnlyOnRoughRock ? 1f : Map.fertilityGrid.FertilityAt(Position);
 
-    public bool IsFertilityConditionOk => FertilityGrowthRateFactor > 0f;
+    private bool IsFertilityConditionOk => FertilityGrowthRateFactor > 0f;
 
     // Temperature.
     public bool IsInCryostasis => Position.GetTemperature(Map) < ClusterPlantProps.minGrowTemperature;
 
-    public float TemperatureGrowthRateFactor
+    private float TemperatureGrowthRateFactor
     {
         get
         {
@@ -68,10 +68,10 @@ public class ClusterPlant : Plant
         }
     }
 
-    public bool IsTemperatureConditionOk => TemperatureGrowthRateFactor > 0f;
+    private bool IsTemperatureConditionOk => TemperatureGrowthRateFactor > 0f;
 
     // Light.
-    public float LightGrowthRateFactor
+    private float LightGrowthRateFactor
     {
         get
         {
@@ -86,10 +86,10 @@ public class ClusterPlant : Plant
         }
     }
 
-    public bool IsLightConditionOk => LightGrowthRateFactor > 0f;
+    private bool IsLightConditionOk => LightGrowthRateFactor > 0f;
 
     // Symbiosis.
-    public bool IsSymbiosisOk
+    private bool IsSymbiosisOk
     {
         get
         {
@@ -103,9 +103,9 @@ public class ClusterPlant : Plant
     }
 
     // Growth rate
-    public new float GrowthRate => FertilityGrowthRateFactor * TemperatureGrowthRateFactor * LightGrowthRateFactor;
+    private new float GrowthRate => FertilityGrowthRateFactor * TemperatureGrowthRateFactor * LightGrowthRateFactor;
 
-    public new float GrowthPerTick
+    private new float GrowthPerTick
     {
         get
         {
@@ -121,7 +121,7 @@ public class ClusterPlant : Plant
     }
 
     // Plant grower and terrain.
-    public bool IsOnCavePlantGrower
+    private bool IsOnCavePlantGrower
     {
         get
         {
@@ -132,7 +132,7 @@ public class ClusterPlant : Plant
         }
     }
 
-    public bool IsOnValidNaturalSpot
+    private bool IsOnValidNaturalSpot
     {
         get
         {
@@ -163,17 +163,17 @@ public class ClusterPlant : Plant
     /// <summary>
     ///     Check if the terrain is valid. Require a rough terrain not constructible by player.
     /// </summary>
-    public bool IsOnNaturalRoughRock
+    private bool IsOnNaturalRoughRock
     {
         get
         {
             var terrain = Map.terrainGrid.TerrainAt(Position);
-            return terrain.layerable == false
+            return !terrain.layerable
                    && terrain.defName.Contains("Rough");
         }
     }
 
-    public bool IsCellNearNaturalRockBlock
+    private bool IsCellNearNaturalRockBlock
     {
         get
         {
@@ -204,14 +204,14 @@ public class ClusterPlant : Plant
         }
     }
 
-    public bool IsGrowingNow => LifeStage == PlantLifeStage.Growing
-                                && IsTemperatureConditionOk
-                                && IsLightConditionOk
-                                && (IsOnCavePlantGrower
-                                    || IsOnValidNaturalSpot
-                                    && cluster.DestroyedOrNull() == false);
+    private bool IsGrowingNow => LifeStage == PlantLifeStage.Growing
+                                 && IsTemperatureConditionOk
+                                 && IsLightConditionOk
+                                 && (IsOnCavePlantGrower
+                                     || IsOnValidNaturalSpot
+                                     && !cluster.DestroyedOrNull());
 
-    public new bool Dying
+    private new bool Dying
     {
         get
         {
@@ -228,7 +228,7 @@ public class ClusterPlant : Plant
 
             var temperature = Position.GetTemperature(Map);
             var plantCanGrowHere = IsOnCavePlantGrower
-                                   || cluster.DestroyedOrNull() == false
+                                   || !cluster.DestroyedOrNull()
                                    && IsOnValidNaturalSpot;
             var plantIsInHostileConditions = temperature > ClusterPlantProps.maxGrowTemperature
                                              || !IsLightConditionOk
@@ -287,7 +287,7 @@ public class ClusterPlant : Plant
     {
         base.Destroy(mode);
         TryToDestroyGlower();
-        if (cluster.DestroyedOrNull() == false)
+        if (!cluster.DestroyedOrNull())
         {
             cluster.NotifyPlantRemoved();
         }
@@ -315,7 +315,7 @@ public class ClusterPlant : Plant
         }
 
         // Verify the plant is not in cryostasis.
-        if (IsInCryostasis == false)
+        if (!IsInCryostasis)
         {
             if (LifeStage == PlantLifeStage.Mature)
             {
@@ -340,16 +340,16 @@ public class ClusterPlant : Plant
     /// <summary>
     ///     Update the glower according to the plant growth, cryostatis state and snow depth.
     /// </summary>
-    public void UpdateGlowerAccordingToGrowth()
+    private void UpdateGlowerAccordingToGrowth()
     {
-        if (ClusterPlantProps.hasStaticGlower == false
-            && ClusterPlantProps.hasDynamicGlower == false)
+        if (!ClusterPlantProps.hasStaticGlower
+            && !ClusterPlantProps.hasDynamicGlower)
         {
             return;
         }
 
         if (IsInCryostasis
-            || Position.GetSnowDepth(Map) >= def.hideAtSnowDepth)
+            || Position.GetSnowDepth(Map) >= def.hideAtSnowOrSandDepth)
         {
             TryToDestroyGlower();
             return;
@@ -364,42 +364,39 @@ public class ClusterPlant : Plant
         }
         else if (ClusterPlantProps.hasDynamicGlower)
         {
-            if (Growth < 0.33f)
+            switch (Growth)
             {
-                if (!glower.DestroyedOrNull() && glower.def == Util_CaveworldFlora.GetGlowerSmallDef(def))
-                {
+                case < 0.33f when !glower.DestroyedOrNull() && glower.def == Util_CaveworldFlora.GetGlowerSmallDef(def):
                     return;
-                }
-
-                TryToDestroyGlower();
-                glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerSmallDef(def), Position, Map);
-            }
-            else if (Growth < 0.66f)
-            {
-                if (!glower.DestroyedOrNull() && glower.def == Util_CaveworldFlora.GetGlowerMediumDef(def))
-                {
+                case < 0.33f:
+                    TryToDestroyGlower();
+                    glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerSmallDef(def), Position, Map);
+                    break;
+                case < 0.66f
+                    when !glower.DestroyedOrNull() && glower.def == Util_CaveworldFlora.GetGlowerMediumDef(def):
                     return;
-                }
-
-                TryToDestroyGlower();
-                glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerMediumDef(def), Position, Map);
-            }
-            else
-            {
-                if (!glower.DestroyedOrNull() && glower.def == Util_CaveworldFlora.GetGlowerBigDef(def))
+                case < 0.66f:
+                    TryToDestroyGlower();
+                    glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerMediumDef(def), Position, Map);
+                    break;
+                default:
                 {
-                    return;
-                }
+                    if (!glower.DestroyedOrNull() && glower.def == Util_CaveworldFlora.GetGlowerBigDef(def))
+                    {
+                        return;
+                    }
 
-                TryToDestroyGlower();
-                glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerBigDef(def), Position, Map);
+                    TryToDestroyGlower();
+                    glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerBigDef(def), Position, Map);
+                    break;
+                }
             }
         }
     }
 
     protected void TryToDestroyGlower()
     {
-        if (glower.DestroyedOrNull() == false)
+        if (!glower.DestroyedOrNull())
         {
             glower.Destroy();
         }
@@ -414,95 +411,94 @@ public class ClusterPlant : Plant
     {
         var stringBuilder = new StringBuilder();
         stringBuilder.Append("PercentGrowth".Translate(GrowthPercentString));
-        if (LifeStage == PlantLifeStage.Mature)
+        switch (LifeStage)
         {
-            if (def.plant.Harvestable)
-            {
+            case PlantLifeStage.Mature when def.plant.Harvestable:
                 stringBuilder.AppendLine();
                 stringBuilder.Append("ReadyToHarvest".Translate());
-            }
-            else
-            {
+                break;
+            case PlantLifeStage.Mature:
                 stringBuilder.AppendLine();
                 stringBuilder.Append("Mature".Translate());
-            }
-        }
-        else if (LifeStage == PlantLifeStage.Growing)
-        {
-            if (IsInCryostasis)
-            {
+                break;
+            case PlantLifeStage.Growing when IsInCryostasis:
                 stringBuilder.AppendLine();
                 stringBuilder.Append("CaveworldFlora.InCryostasis".Translate());
-            }
-            else if (Dying)
+                break;
+            case PlantLifeStage.Growing:
             {
-                stringBuilder.AppendLine();
-                stringBuilder.Append("CaveworldFlora.Dying".Translate());
-                if (Position.GetTemperature(Map) > ClusterPlantProps.maxGrowTemperature)
+                if (Dying)
                 {
-                    stringBuilder.Append(", " + "CaveworldFlora.Drying".Translate());
-                }
-
-                if (IsLightConditionOk == false)
-                {
-                    var light = Map.glowGrid.GroundGlowAt(Position);
-                    if (light < ClusterPlantProps.minLight)
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append("CaveworldFlora.Dying".Translate());
+                    if (Position.GetTemperature(Map) > ClusterPlantProps.maxGrowTemperature)
                     {
-                        stringBuilder.Append(", " + "CaveworldFlora.TooDark".Translate());
+                        stringBuilder.Append(", " + "CaveworldFlora.Drying".Translate());
                     }
-                    else if (light > ClusterPlantProps.maxLight)
+
+                    if (!IsLightConditionOk)
                     {
-                        stringBuilder.Append(", " + "CaveworldFlora.Overlit".Translate());
+                        var light = Map.glowGrid.GroundGlowAt(Position);
+                        if (light < ClusterPlantProps.minLight)
+                        {
+                            stringBuilder.Append(", " + "CaveworldFlora.TooDark".Translate());
+                        }
+                        else if (light > ClusterPlantProps.maxLight)
+                        {
+                            stringBuilder.Append(", " + "CaveworldFlora.Overlit".Translate());
+                        }
                     }
-                }
 
-                if (ClusterPlantProps.growOnlyUndeRoof)
-                {
-                    if (Map.roofGrid.Roofed(Position) == false)
+                    if (ClusterPlantProps.growOnlyUndeRoof)
                     {
-                        stringBuilder.Append(", " + "CaveworldFlora.Unroofed".Translate());
+                        if (!Map.roofGrid.Roofed(Position))
+                        {
+                            stringBuilder.Append(", " + "CaveworldFlora.Unroofed".Translate());
+                        }
                     }
-                }
 
-                if (IsOnCavePlantGrower)
-                {
-                    return stringBuilder.ToString();
-                }
+                    if (IsOnCavePlantGrower)
+                    {
+                        return stringBuilder.ToString();
+                    }
 
-                if (ClusterPlantProps.growOnlyOnRoughRock)
-                {
-                    if (IsOnNaturalRoughRock == false)
+                    if (ClusterPlantProps.growOnlyOnRoughRock)
+                    {
+                        if (!IsOnNaturalRoughRock)
+                        {
+                            stringBuilder.Append(", " + "CaveworldFlora.UnadaptedSoil".Translate());
+                        }
+                    }
+                    else if (!IsFertilityConditionOk)
                     {
                         stringBuilder.Append(", " + "CaveworldFlora.UnadaptedSoil".Translate());
                     }
-                }
-                else if (IsFertilityConditionOk == false)
-                {
-                    stringBuilder.Append(", " + "CaveworldFlora.UnadaptedSoil".Translate());
-                }
 
-                if (ClusterPlantProps.growOnlyNearNaturalRock)
-                {
-                    if (IsCellNearNaturalRockBlock == false)
+                    if (ClusterPlantProps.growOnlyNearNaturalRock)
                     {
-                        stringBuilder.Append(", " + "CaveworldFlora.TooFarFromRock".Translate());
+                        if (!IsCellNearNaturalRockBlock)
+                        {
+                            stringBuilder.Append(", " + "CaveworldFlora.TooFarFromRock".Translate());
+                        }
+                    }
+
+                    if (cluster.DestroyedOrNull())
+                    {
+                        stringBuilder.Append(", " + "CaveworldFlora.ClusterRootRemoved".Translate());
+                    }
+
+                    if (!ClusterPlantProps.isSymbiosisPlant)
+                    {
+                        return stringBuilder.ToString();
+                    }
+
+                    if (!IsSymbiosisOk)
+                    {
+                        stringBuilder.Append(", " + "CaveworldFlora.BrokenSymbiosis".Translate());
                     }
                 }
 
-                if (cluster.DestroyedOrNull())
-                {
-                    stringBuilder.Append(", " + "CaveworldFlora.ClusterRootRemoved".Translate());
-                }
-
-                if (!ClusterPlantProps.isSymbiosisPlant)
-                {
-                    return stringBuilder.ToString();
-                }
-
-                if (!IsSymbiosisOk)
-                {
-                    stringBuilder.Append(", " + "CaveworldFlora.BrokenSymbiosis".Translate());
-                }
+                break;
             }
         }
 
@@ -510,7 +506,7 @@ public class ClusterPlant : Plant
     }
 
     // ===================== Static exported functions =====================
-    public static bool IsFertilityConditionOkAt(ThingDef_ClusterPlant plantDef, Map map, IntVec3 position)
+    private static bool isFertilityConditionOkAt(ThingDef_ClusterPlant plantDef, Map map, IntVec3 position)
     {
         var fertility = map.fertilityGrid.FertilityAt(position);
         return fertility >= plantDef.minFertility
@@ -546,7 +542,7 @@ public class ClusterPlant : Plant
         }
         else
         {
-            isValidSpot &= IsFertilityConditionOkAt(plantDef, map, position);
+            isValidSpot &= isFertilityConditionOkAt(plantDef, map, position);
         }
 
         if (plantDef.growOnlyUndeRoof)
@@ -555,12 +551,12 @@ public class ClusterPlant : Plant
         }
         else
         {
-            isValidSpot &= map.roofGrid.Roofed(position) == false;
+            isValidSpot &= !map.roofGrid.Roofed(position);
         }
 
         if (plantDef.growOnlyNearNaturalRock)
         {
-            isValidSpot &= IsNearNaturalRockBlock(map, position);
+            isValidSpot &= isNearNaturalRockBlock(map, position);
         }
 
         return isValidSpot;
@@ -569,11 +565,11 @@ public class ClusterPlant : Plant
     public static bool IsNaturalRoughRockAt(Map map, IntVec3 position)
     {
         var terrain = map.terrainGrid.TerrainAt(position);
-        return terrain.layerable == false
+        return !terrain.layerable
                && terrain.defName.Contains("Rough");
     }
 
-    public static bool IsNearNaturalRockBlock(Map map, IntVec3 position)
+    private static bool isNearNaturalRockBlock(Map map, IntVec3 position)
     {
         for (var xOffset = -2; xOffset <= 2; xOffset++)
         {

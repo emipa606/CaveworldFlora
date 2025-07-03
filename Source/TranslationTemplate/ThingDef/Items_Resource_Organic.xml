@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: gleamcap stem -->
+  <GleamcapStem.label>gleamcap stem</GleamcapStem.label>
+  <!-- EN: A massive gleamcap stem. Known for its natural healing properties by caveworld tenders, it can be used to treat injuries and ease the pain. -->
+  <GleamcapStem.description>A massive gleamcap stem. Known for its natural healing properties by caveworld tenders, it can be used to treat injuries and ease the pain.</GleamcapStem.description>
+  <!-- EN: giant leaf -->
+  <RawGiantLeaf.label>giant leaf</RawGiantLeaf.label>
+  <!-- EN: Raw giant leaf. Not really appetizing raw, it is better prepared as a soup. -->
+  <RawGiantLeaf.description>Raw giant leaf. Not really appetizing raw, it is better prepared as a soup.</RawGiantLeaf.description>
+  <!-- EN: glowbulb -->
+  <RawGlowbulb.label>glowbulb</RawGlowbulb.label>
+  <!-- EN: Raw glowbulb. While being nutritious, its very rough taste make it better used as a cooked ingredient. -->
+  <RawGlowbulb.description>Raw glowbulb. While being nutritious, its very rough taste make it better used as a cooked ingredient.</RawGlowbulb.description>
+  <!-- EN: shimmershroom -->
+  <RawShimmershroom.label>shimmershroom</RawShimmershroom.label>
+  <!-- EN: Raw shimmershroom. Its delicate taste and nutrition qualities are much appreciated by caveworlds inhabitants. -->
+  <RawShimmershroom.description>Raw shimmershroom. Its delicate taste and nutrition qualities are much appreciated by caveworlds inhabitants.</RawShimmershroom.description>
+</LanguageData>

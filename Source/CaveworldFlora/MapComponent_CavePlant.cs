@@ -17,11 +17,11 @@ namespace CaveworldFlora;
 /// </permission>
 public class MapComponent_ClusterPlant(Map map) : MapComponent(map)
 {
-    public List<ThingDef_ClusterPlant> cavePlantDefsInternal;
-    public int nextRandomSpawnTick = 10;
-    public int randomSpawnPeriodInTicks;
+    private List<ThingDef_ClusterPlant> cavePlantDefsInternal;
+    private int nextRandomSpawnTick = 10;
+    private int randomSpawnPeriodInTicks;
 
-    public List<ThingDef_ClusterPlant> CavePlantDefs
+    private List<ThingDef_ClusterPlant> CavePlantDefs
     {
         get
         {
@@ -39,7 +39,7 @@ public class MapComponent_ClusterPlant(Map map) : MapComponent(map)
                 }
 
                 if (plantDef is ThingDef_ClusterPlant { isSymbiosisPlant: false } clusterPlantDef &&
-                    (clusterPlantDef.growsOnlyInCaveBiome == false
+                    (!clusterPlantDef.growsOnlyInCaveBiome
                      || map.Biome.defName == "Cave"))
                 {
                     cavePlantDefsInternal.Add(clusterPlantDef);
@@ -65,13 +65,13 @@ public class MapComponent_ClusterPlant(Map map) : MapComponent(map)
         }
 
         nextRandomSpawnTick = Find.TickManager.TicksGame + randomSpawnPeriodInTicks;
-        TrySpawnNewClusterAtRandomPosition();
+        trySpawnNewClusterAtRandomPosition();
     }
 
     /// <summary>
     ///     Tries to spawn a new cluster at a random position on the map. The exclusivity radius still applies.
     /// </summary>
-    public void TrySpawnNewClusterAtRandomPosition()
+    private void trySpawnNewClusterAtRandomPosition()
     {
         var cavePlantDef = CavePlantDefs.RandomElementByWeight(plantDef =>
             plantDef.plant.wildClusterWeight / plantDef.clusterSizeRange.Average);

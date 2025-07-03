@@ -1,5 +1,4 @@
-﻿using System.Text;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 // RimWorld specific functions are found here
 // RimWorld universal objects are here
@@ -46,7 +45,7 @@ public class Cluster : Plant
             return newPlant;
         }
 
-        newCluster.Initialize(plantDef, desiredSize);
+        newCluster.initialize(plantDef, desiredSize);
         GenSpawn.Spawn(newCluster, spawnCell, map);
         if (newPlant == null)
         {
@@ -58,7 +57,7 @@ public class Cluster : Plant
         return newPlant;
     }
 
-    public void Initialize(ThingDef_ClusterPlant plant, int size)
+    private void initialize(ThingDef_ClusterPlant plant, int size)
     {
         Growth = 1f; // For texture dimension.
         plantDef = plant;
@@ -71,18 +70,12 @@ public class Cluster : Plant
         return plantDef.clusterExclusivityRadiusOffset + (clusterSize * plantDef.clusterExclusivityRadiusFactor);
     }
 
-    public static float GetMaxExclusivityRadius(ThingDef_ClusterPlant plantDef)
-    {
-        return plantDef.clusterExclusivityRadiusOffset +
-               (plantDef.clusterSizeRange.max * plantDef.clusterExclusivityRadiusFactor);
-    }
-
     public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
     {
         base.Destroy(mode);
-        if (symbiosisCluster.DestroyedOrNull() == false)
+        if (!symbiosisCluster.DestroyedOrNull())
         {
-            symbiosisCluster.NotifySymbiosisClusterRemoved(this);
+            symbiosisCluster.notifySymbiosisClusterRemoved(this);
         }
     }
 
@@ -163,7 +156,7 @@ public class Cluster : Plant
         cluster.symbiosisCluster = this;
     }
 
-    public void NotifySymbiosisClusterRemoved(Cluster cluster)
+    private void notifySymbiosisClusterRemoved(Cluster cluster)
     {
         symbiosisCluster = null;
         cluster.symbiosisCluster = null;
@@ -171,9 +164,11 @@ public class Cluster : Plant
 
     public override string GetInspectString()
     {
-        var stringBuilder = new StringBuilder();
+        if (plantDef == null)
+        {
+            return string.Empty;
+        }
 
-        stringBuilder.Append(plantDef.LabelCap);
-        return stringBuilder.ToString();
+        return plantDef.LabelCap;
     }
 }

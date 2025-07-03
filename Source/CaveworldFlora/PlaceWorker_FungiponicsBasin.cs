@@ -17,7 +17,7 @@ namespace CaveworldFlora;
 /// </permission>
 public class PlaceWorker_FungiponicsBasin : PlaceWorker
 {
-    public const float minDistanceBetweenFungiponicsBasins = 5.9f;
+    private const float minDistanceBetweenFungiponicsBasins = 5.9f;
 
     /// <summary>
     ///     Check if a new fungiponics basin can be built at this location.
@@ -29,12 +29,12 @@ public class PlaceWorker_FungiponicsBasin : PlaceWorker
     {
         foreach (var cell in GenAdj.CellsOccupiedBy(loc, rot, checkingDef.Size))
         {
-            if (ClusterPlant.IsNaturalRoughRockAt(map, cell) == false)
+            if (!ClusterPlant.IsNaturalRoughRockAt(map, cell))
             {
                 return new AcceptanceReport("CaveworldFlora.MustOnRoughRock".Translate());
             }
 
-            if (map.roofGrid.Roofed(loc) == false)
+            if (!map.roofGrid.Roofed(loc))
             {
                 return new AcceptanceReport("CaveworldFlora.MustBeRoofed".Translate());
             }

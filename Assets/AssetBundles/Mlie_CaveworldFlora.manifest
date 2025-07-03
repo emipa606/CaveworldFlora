@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 3082671886
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 61453eecf9940da2b3b26b2898c3c39f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2612ac43db082a73502ee80f2eceb73f
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 61453eecf9940da2b3b26b2898c3c39f
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Item/Resource/PlantFoodRaw/RawGiantLeaf.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Glowbulb/GlowbulbC.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Cluster/Cluster.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/BlackLotus/BlackLotusB.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Glowbulb/GlowbulbB.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Building/DummyTexture.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/CaveLace/CaveLaceA.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/GiantLeaf/GiantLeafA.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Gleamcap/GleamcapB.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/DevilTongue/Flower/DevilTongueFlower.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Item/Resource/PlantFoodRaw/RawGlowbulb.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/BlackLotus/BlackLotusA.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/GiantLeaf/GiantLeafB.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Item/Resource/GleamcapStem.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/StoneGrass/StoneGrass.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Brightbells/Brightbells.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Shimmershroom/ShimmershroomB.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/CaveVine/CaveVineA.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/DevilTongue/Body/DevilTongueBody.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/CaveLace/CaveLaceB.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Gleamcap/GleamcapA.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Shimmershroom/ShimmershroomA.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Item/Resource/PlantFoodRaw/RawShimmershroom.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Shimmershroom/ShimmershroomC.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/Glowbulb/GlowbulbA.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Building/Production/FungiponicsBasin.png
+- Assets/Data/Mlie.CaveworldFlora/Textures/Things/Plant/GiantLeaf/GiantLeafC.png
+Dependencies: []

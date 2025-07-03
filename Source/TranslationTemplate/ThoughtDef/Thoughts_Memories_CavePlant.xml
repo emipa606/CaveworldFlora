@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: ate raw shimmershroom -->
+  <AteRawShimmershroom.stages.ate_raw_shimmershroom.label>ate raw shimmershroom</AteRawShimmershroom.stages.ate_raw_shimmershroom.label>
+  <!-- EN: I ate a delicious shimmershroom. It tastes so good! -->
+  <AteRawShimmershroom.stages.ate_raw_shimmershroom.description>I ate a delicious shimmershroom. It tastes so good!</AteRawShimmershroom.stages.ate_raw_shimmershroom.description>
+  <!-- EN: breathed gleamcap smoke -->
+  <BreathedGleamcapSmoke.stages.breathed_gleamcap_smoke.label>breathed gleamcap smoke</BreathedGleamcapSmoke.stages.breathed_gleamcap_smoke.label>
+  <!-- EN: I breathed a strange smoke from this gleamcap. I am feeling so gooood! -->
+  <BreathedGleamcapSmoke.stages.breathed_gleamcap_smoke.description>I breathed a strange smoke from this gleamcap. I am feeling so gooood!</BreathedGleamcapSmoke.stages.breathed_gleamcap_smoke.description>
+</LanguageData>

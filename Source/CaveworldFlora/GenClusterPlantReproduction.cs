@@ -25,7 +25,7 @@ public static class GenClusterPlantReproduction
         spawnCell = IntVec3.Invalid;
 
         var validCellIsFound = CellFinderLoose.TryGetRandomCellWith(validator, map, 1000, out spawnCell);
-        if (validCellIsFound == false)
+        if (!validCellIsFound)
         {
             // Just for robustness, TryGetRandomCellWith set result to IntVec3.Invalid if no valid cell is found.
             spawnCell = IntVec3.Invalid;
@@ -36,54 +36,52 @@ public static class GenClusterPlantReproduction
         bool validator(IntVec3 cell)
         {
             // Check a plant can be spawned here.
-            return IsValidPositionToGrowPlant(plantDef, map, cell, checkTemperature) &&
+            return isValidPositionToGrowPlant(plantDef, map, cell, checkTemperature) &&
                    // Check there is no third cluster nearby.
-                   IsClusterAreaClear(plantDef, newDesiredClusterSize, map, cell);
+                   isClusterAreaClear(plantDef, newDesiredClusterSize, map, cell);
         }
     }
 
     /// <summary>
     ///     Try to spawn another plant in this cluster.
     /// </summary>
-    public static ClusterPlant TryGrowCluster(Cluster cluster, bool checkTemperature = true)
+    public static void TryGrowCluster(Cluster cluster, bool checkTemperature = true)
     {
         if (cluster.actualSize >= cluster.desiredSize)
         {
-            return null;
+            return;
         }
 
-        TryGetRandomSpawnCellNearCluster(cluster, checkTemperature, out var spawnCell);
+        tryGetRandomSpawnCellNearCluster(cluster, checkTemperature, out var spawnCell);
         if (!spawnCell.IsValid)
         {
-            return null;
+            return;
         }
 
         var newPlant = ThingMaker.MakeThing(cluster.plantDef) as ClusterPlant;
         GenSpawn.Spawn(newPlant, spawnCell, cluster.Map);
         if (newPlant == null)
         {
-            return null;
+            return;
         }
 
         newPlant.cluster = cluster;
         cluster.NotifyPlantAdded();
         if (!cluster.plantDef.isSymbiosisPlant)
         {
-            return newPlant;
+            return;
         }
 
         // Destroy source symbiosis plant.
         var sourceSymbiosisPlant =
             spawnCell.GetFirstThing(cluster.Map, cluster.plantDef.symbiosisPlantDefSource);
         sourceSymbiosisPlant?.Destroy();
-
-        return newPlant;
     }
 
     /// <summary>
     ///     Get a valid cell in this cluster to spawn another cave plant.
     /// </summary>
-    public static void TryGetRandomSpawnCellNearCluster(Cluster cluster, bool checkTemperature,
+    private static void tryGetRandomSpawnCellNearCluster(Cluster cluster, bool checkTemperature,
         out IntVec3 spawnCell)
     {
         spawnCell = IntVec3.Invalid;
@@ -94,7 +92,7 @@ public static class GenClusterPlantReproduction
 
         var validCellIsFound = CellFinder.TryFindRandomCellNear(cluster.Position, cluster.Map,
             (int)maxSpawnDistance, validator, out spawnCell);
-        if (validCellIsFound == false)
+        if (!validCellIsFound)
         {
             // Note that TryFindRandomCellNear set result to root if no valid cell is found!
             spawnCell = IntVec3.Invalid;
@@ -105,7 +103,7 @@ public static class GenClusterPlantReproduction
         bool validator(IntVec3 cell)
         {
             // Check cell is not too far away from current cluster.
-            if (cell.InHorDistOf(cluster.Position, maxSpawnDistance) == false)
+            if (!cell.InHorDistOf(cluster.Position, maxSpawnDistance))
             {
                 return false;
             }
@@ -119,26 +117,27 @@ public static class GenClusterPlantReproduction
                 return false;
             }
 
-            return IsValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell, checkTemperature);
+            return isValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell, checkTemperature);
         }
     }
 
     /// <summary>
     ///     Try to spawn a new cluster away from plant.
     /// </summary>
-    public static ClusterPlant TrySpawnNewClusterAwayFrom(Cluster cluster)
+    public static void TrySpawnNewClusterAwayFrom(Cluster cluster)
     {
         var newDesiredClusterSize = cluster.plantDef.clusterSizeRange.RandomInRange;
-        TryGetRandomSpawnCellAwayFromCluster(cluster, newDesiredClusterSize, out var spawnCell);
-        return spawnCell.IsValid
-            ? Cluster.SpawnNewClusterAt(cluster.Map, spawnCell, cluster.plantDef, newDesiredClusterSize)
-            : null;
+        tryGetRandomSpawnCellAwayFromCluster(cluster, newDesiredClusterSize, out var spawnCell);
+        if (spawnCell.IsValid)
+        {
+            Cluster.SpawnNewClusterAt(cluster.Map, spawnCell, cluster.plantDef, newDesiredClusterSize);
+        }
     }
 
     /// <summary>
     ///     Try to get a valid cell to spawn a new cluster away from plant.
     /// </summary>
-    public static void TryGetRandomSpawnCellAwayFromCluster(Cluster cluster, int newDesiredClusterSize,
+    private static void tryGetRandomSpawnCellAwayFromCluster(Cluster cluster, int newDesiredClusterSize,
         out IntVec3 spawnCell)
     {
         spawnCell = IntVec3.Invalid;
@@ -150,7 +149,7 @@ public static class GenClusterPlantReproduction
 
         var validCellIsFound = CellFinder.TryFindRandomCellNear(cluster.Position, cluster.Map,
             (int)newClusterMaxDistance, validator, out spawnCell);
-        if (validCellIsFound == false)
+        if (!validCellIsFound)
         {
             // Note that TryFindRandomCellNear set result to root if no valid cell is found!
             spawnCell = IntVec3.Invalid;
@@ -167,7 +166,7 @@ public static class GenClusterPlantReproduction
             }
 
             // Check cell is not too distant from current cluster.
-            if (cell.InHorDistOf(cluster.Position, newClusterMaxDistance) == false)
+            if (!cell.InHorDistOf(cluster.Position, newClusterMaxDistance))
             {
                 return false;
             }
@@ -179,16 +178,16 @@ public static class GenClusterPlantReproduction
             }
 
             // Check a plant can be spawned here.
-            return IsValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell) &&
+            return isValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell) &&
                    // Check there is no third cluster nearby.
-                   IsClusterAreaClear(cluster.plantDef, newDesiredClusterSize, cluster.Map, cell);
+                   isClusterAreaClear(cluster.plantDef, newDesiredClusterSize, cluster.Map, cell);
         }
     }
 
     /// <summary>
     ///     Check if there is another cluster too close.
     /// </summary>
-    public static bool IsClusterAreaClear(ThingDef_ClusterPlant plantDef, int newDesiredClusterSize, Map map,
+    private static bool isClusterAreaClear(ThingDef_ClusterPlant plantDef, int newDesiredClusterSize, Map map,
         IntVec3 position)
     {
         var newClusterExclusivityRadius = Cluster.GetExclusivityRadius(plantDef, newDesiredClusterSize);
@@ -213,10 +212,10 @@ public static class GenClusterPlantReproduction
     /// <summary>
     ///     Check if position is valid to grow a plant. Does not check cluster exclusivity!
     /// </summary>
-    public static bool IsValidPositionToGrowPlant(ThingDef_ClusterPlant plantDef, Map map, IntVec3 position,
+    private static bool isValidPositionToGrowPlant(ThingDef_ClusterPlant plantDef, Map map, IntVec3 position,
         bool checkTemperature = true)
     {
-        if (position.InBounds(map) == false)
+        if (!position.InBounds(map))
         {
             return false;
         }
@@ -235,20 +234,20 @@ public static class GenClusterPlantReproduction
         }
 
         // Check terrain condition.
-        if (ClusterPlant.CanTerrainSupportPlantAt(plantDef, map, position) == false)
+        if (!ClusterPlant.CanTerrainSupportPlantAt(plantDef, map, position))
         {
             return false;
         }
 
         // Check temperature conditions.
         if (checkTemperature
-            && ClusterPlant.IsTemperatureConditionOkAt(plantDef, map, position) == false)
+            && !ClusterPlant.IsTemperatureConditionOkAt(plantDef, map, position))
         {
             return false;
         }
 
         // Check light conditions.
-        if (ClusterPlant.IsLightConditionOkAt(plantDef, map, position) == false)
+        if (!ClusterPlant.IsLightConditionOkAt(plantDef, map, position))
         {
             return false;
         }
@@ -288,18 +287,18 @@ public static class GenClusterPlantReproduction
         return PlantUtility.SnowAllowsPlanting(position, map);
     }
 
-    public static ClusterPlant TrySpawnNewSymbiosisCluster(Cluster cluster)
+    public static void TrySpawnNewSymbiosisCluster(Cluster cluster)
     {
         // Check there is not already a symbiosis cluster.
         if (cluster.symbiosisCluster != null)
         {
-            return null;
+            return;
         }
 
         foreach (var cell in GenRadial
                      .RadialCellsAround(cluster.Position, cluster.plantDef.clusterSpawnRadius, false).InRandomOrder())
         {
-            if (cell.InBounds(cluster.Map) == false)
+            if (!cell.InBounds(cluster.Map))
             {
                 continue;
             }
@@ -315,9 +314,7 @@ public static class GenClusterPlantReproduction
                 cluster.plantDef.symbiosisPlantDefEvolution.clusterSizeRange.RandomInRange);
             cluster.NotifySymbiosisClusterAdded(symbiosisPlant.cluster);
 
-            return symbiosisPlant;
+            return;
         }
-
-        return null;
     }
 }

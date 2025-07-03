@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: glowing brightbells -->
+  <BrightbellsGlowerBig.label>glowing brightbells</BrightbellsGlowerBig.label>
+  <!-- EN: A big shimmershroom glower. -->
+  <BrightbellsGlowerBig.description>A big shimmershroom glower.</BrightbellsGlowerBig.description>
+  <!-- EN: glowing brightbells -->
+  <BrightbellsGlowerMedium.label>glowing brightbells</BrightbellsGlowerMedium.label>
+  <!-- EN: A medium shimmershroom glower. -->
+  <BrightbellsGlowerMedium.description>A medium shimmershroom glower.</BrightbellsGlowerMedium.description>
+  <!-- EN: glowing brightbells -->
+  <BrightbellsGlowerSmall.label>glowing brightbells</BrightbellsGlowerSmall.label>
+  <!-- EN: A small shimmershroom glower. -->
+  <BrightbellsGlowerSmall.description>A small shimmershroom glower.</BrightbellsGlowerSmall.description>
+  <!-- EN: glowing gleamcap -->
+  <GleamcapGlowerBig.label>glowing gleamcap</GleamcapGlowerBig.label>
+  <!-- EN: A big gleamcap glower. -->
+  <GleamcapGlowerBig.description>A big gleamcap glower.</GleamcapGlowerBig.description>
+  <!-- EN: glowing gleamcap -->
+  <GleamcapGlowerMedium.label>glowing gleamcap</GleamcapGlowerMedium.label>
+  <!-- EN: A medium gleamcap glower. -->
+  <GleamcapGlowerMedium.description>A medium gleamcap glower.</GleamcapGlowerMedium.description>
+  <!-- EN: glowing gleamcap -->
+  <GleamcapGlowerSmall.label>glowing gleamcap</GleamcapGlowerSmall.label>
+  <!-- EN: A small gleamcap glower. -->
+  <GleamcapGlowerSmall.description>A small gleamcap glower.</GleamcapGlowerSmall.description>
+  <!-- EN: spores -->
+  <GleamcapSporeSpawner.label>spores</GleamcapSporeSpawner.label>
+  <!-- EN: Building used to spawn gleamcap spores. -->
+  <GleamcapSporeSpawner.description>Building used to spawn gleamcap spores.</GleamcapSporeSpawner.description>
+  <!-- EN: glowing glowbulb -->
+  <GlowbulbGlowerBig.label>glowing glowbulb</GlowbulbGlowerBig.label>
+  <!-- EN: A big glowbulb glower. -->
+  <GlowbulbGlowerBig.description>A big glowbulb glower.</GlowbulbGlowerBig.description>
+  <!-- EN: glowing glowbulb -->
+  <GlowbulbGlowerMedium.label>glowing glowbulb</GlowbulbGlowerMedium.label>
+  <!-- EN: A medium glowbulb glower. -->
+  <GlowbulbGlowerMedium.description>A medium glowbulb glower.</GlowbulbGlowerMedium.description>
+  <!-- EN: glowing glowbulb -->
+  <GlowbulbGlowerSmall.label>glowing glowbulb</GlowbulbGlowerSmall.label>
+  <!-- EN: A small glowbulb glower. -->
+  <GlowbulbGlowerSmall.description>A small glowbulb glower.</GlowbulbGlowerSmall.description>
+  <!-- EN: glowing shimmershroom -->
+  <ShimmershroomGlowerBig.label>glowing shimmershroom</ShimmershroomGlowerBig.label>
+  <!-- EN: A big shimmershroom glower. -->
+  <ShimmershroomGlowerBig.description>A big shimmershroom glower.</ShimmershroomGlowerBig.description>
+  <!-- EN: glowing shimmershroom -->
+  <ShimmershroomGlowerMedium.label>glowing shimmershroom</ShimmershroomGlowerMedium.label>
+  <!-- EN: A medium shimmershroom glower. -->
+  <ShimmershroomGlowerMedium.description>A medium shimmershroom glower.</ShimmershroomGlowerMedium.description>
+  <!-- EN: glowing shimmershroom -->
+  <ShimmershroomGlowerSmall.label>glowing shimmershroom</ShimmershroomGlowerSmall.label>
+  <!-- EN: A small shimmershroom glower. -->
+  <ShimmershroomGlowerSmall.description>A small shimmershroom glower.</ShimmershroomGlowerSmall.description>
+</LanguageData>

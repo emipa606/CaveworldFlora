@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: fungiponics basin -->
+  <FungiponicsBasin.label>fungiponics basin</FungiponicsBasin.label>
+  <!-- EN: Derived from the hydroponics basins, the fungiponics basin is designed to grow cave plants. Does only require some initial organic matter to start growing. Sowing mushrooms is difficult and those plants grow at their own pace! -->
+  <FungiponicsBasin.description>Derived from the hydroponics basins, the fungiponics basin is designed to grow cave plants. Does only require some initial organic matter to start growing. Sowing mushrooms is difficult and those plants grow at their own pace!</FungiponicsBasin.description>
+</LanguageData>

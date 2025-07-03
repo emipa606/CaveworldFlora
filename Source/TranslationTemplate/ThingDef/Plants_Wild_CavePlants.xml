@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: black lotus -->
+  <BlackLotus.label>black lotus</BlackLotus.label>
+  <!-- EN: A beautiful and very impressive plant, the black lotus slowly growths a single massive flower. Be careful as the pheromons emanating from it are extremely toxic. -->
+  <BlackLotus.description>A beautiful and very impressive plant, the black lotus slowly growths a single massive flower. Be careful as the pheromons emanating from it are extremely toxic.</BlackLotus.description>
+  <!-- EN: cave lace -->
+  <CaveLace.label>cave lace</CaveLace.label>
+  <!-- EN: A rapid growing and aerial liana. One can almost see through its delicate and fragile branches. -->
+  <CaveLace.description>A rapid growing and aerial liana. One can almost see through its delicate and fragile branches.</CaveLace.description>
+  <!-- EN: cave vine -->
+  <CaveVine.label>cave vine</CaveVine.label>
+  <!-- EN: A tortured cave vine growing really slowly. Its branches are really tough thanks to the numerous underground minerals this plant absorbs. -->
+  <CaveVine.description>A tortured cave vine growing really slowly. Its branches are really tough thanks to the numerous underground minerals this plant absorbs.</CaveVine.description>
+  <!-- EN: devil's tongue -->
+  <DevilTongue.label>devil's tongue</DevilTongue.label>
+  <!-- EN: Local tribesmen call these plants "devil's tongue" because of their color. They also know that when their light goes down, something is approaching... threat or foe? -->
+  <DevilTongue.description>Local tribesmen call these plants "devil's tongue" because of their color. They also know that when their light goes down, something is approaching... threat or foe?</DevilTongue.description>
+  <!-- EN: giant leaf -->
+  <GiantLeaf.label>giant leaf</GiantLeaf.label>
+  <!-- EN: A giant and very impressive leaf. Gathering water and mineral elements from the ground, it can be prepared as a soup. -->
+  <GiantLeaf.description>A giant and very impressive leaf. Gathering water and mineral elements from the ground, it can be prepared as a soup.</GiantLeaf.description>
+  <!-- EN: stone grass -->
+  <StoneGrass.label>stone grass</StoneGrass.label>
+  <!-- EN: This kind of grass only grows in deep and dark caves. The soft light emanating from a field of stone grass is appeasing. -->
+  <StoneGrass.description>This kind of grass only grows in deep and dark caves. The soft light emanating from a field of stone grass is appeasing.</StoneGrass.description>
+</LanguageData>

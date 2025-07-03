@@ -16,13 +16,13 @@ namespace CaveworldFlora;
 /// </permission>
 public class GleamcapSporeSpawner : Building
 {
-    public const int sporeEffectRadius = 5;
-    public const int minSporeSpawningDurationInTicks = 20 * GenTicks.TicksPerRealSecond;
-    public const int maxSporeSpawningDurationInTicks = 60 * GenTicks.TicksPerRealSecond;
-    public int nextNearbyPawnCheckTick;
-    public int nextSporeThrowTick;
+    private const int sporeEffectRadius = 5;
+    private const int minSporeSpawningDurationInTicks = 20 * GenTicks.TicksPerRealSecond;
+    private const int maxSporeSpawningDurationInTicks = 60 * GenTicks.TicksPerRealSecond;
+    private int nextNearbyPawnCheckTick;
+    private int nextSporeThrowTick;
     public ClusterPlant_Gleamcap parent;
-    public int sporeSpawnEndTick;
+    private int sporeSpawnEndTick;
 
     // ===================== Setup Work =====================
     /// <summary>
@@ -52,7 +52,7 @@ public class GleamcapSporeSpawner : Building
     ///     - throw some spore.
     ///     - try to apply a mood effect on nearby colonists.
     /// </summary>
-    public override void Tick()
+    protected override void Tick()
     {
         base.Tick();
 

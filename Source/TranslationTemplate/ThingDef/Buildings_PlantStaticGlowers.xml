@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: glowing cave lace -->
+  <CaveLaceGlower.label>glowing cave lace</CaveLaceGlower.label>
+  <!-- EN: Crystal and subtle light of a cave lace. -->
+  <CaveLaceGlower.description>Crystal and subtle light of a cave lace.</CaveLaceGlower.description>
+  <!-- EN: glowing cave vine -->
+  <CaveVineGlower.label>glowing cave vine</CaveVineGlower.label>
+  <!-- EN: Deem light of a giant cave tree. -->
+  <CaveVineGlower.description>Deem light of a giant cave tree.</CaveVineGlower.description>
+  <!-- EN: glowing devil's tongue -->
+  <DevilTongueGlower.label>glowing devil's tongue</DevilTongueGlower.label>
+  <!-- EN: Crimson light of an open devil's tongue. -->
+  <DevilTongueGlower.description>Crimson light of an open devil's tongue.</DevilTongueGlower.description>
+  <!-- EN: glowing giant leaf -->
+  <GiantLeafGlower.label>glowing giant leaf</GiantLeafGlower.label>
+  <!-- EN: Energizing light of a juicy giant leaf. -->
+  <GiantLeafGlower.description>Energizing light of a juicy giant leaf.</GiantLeafGlower.description>
+  <!-- EN: glowing stone grass -->
+  <StoneGrassGlower.label>glowing stone grass</StoneGrassGlower.label>
+  <!-- EN: Soft light of stone grass. -->
+  <StoneGrassGlower.description>Soft light of stone grass.</StoneGrassGlower.description>
+</LanguageData>

@@ -17,35 +17,27 @@ namespace CaveworldFlora;
 [StaticConstructorOnStartup]
 public class ClusterPlant_DevilTongue : ClusterPlant
 {
-    public enum FlowerState
-    {
-        closed,
-        opening,
-        opened,
-        closing
-    }
-
-    protected const float pawnDetectionRadius = 5f;
-    protected const int pawnDetectionPeriodWhenOpenedInTicks = GenTicks.TicksPerRealSecond;
-    protected const int pawnDetectionPeriodWhenClosedInTicks = 5 * GenTicks.TicksPerRealSecond;
-    protected const int flowerClosingDurationInTicks = 1 * GenTicks.TicksPerRealSecond;
-    protected const int flowerOpeningDurationInTicks = 5 * GenTicks.TicksPerRealSecond;
+    private const float pawnDetectionRadius = 5f;
+    private const int pawnDetectionPeriodWhenOpenedInTicks = GenTicks.TicksPerRealSecond;
+    private const int pawnDetectionPeriodWhenClosedInTicks = 5 * GenTicks.TicksPerRealSecond;
+    private const int flowerClosingDurationInTicks = 1 * GenTicks.TicksPerRealSecond;
+    private const int flowerOpeningDurationInTicks = 5 * GenTicks.TicksPerRealSecond;
 
     // Drawing.
-    public static readonly Material flowerTexture = MaterialPool.MatFrom(
+    private static readonly Material flowerTexture = MaterialPool.MatFrom(
         "Things/Plant/DevilTongue/Flower/DevilTongueFlower",
         ShaderDatabase.Transparent);
 
-    public int flowerClosingRemainingTicks;
-    public Matrix4x4 flowerMatrix;
-    public int flowerOpeningTicks;
-    public Vector3 flowerScale = new Vector3(0f, 1f, 0f);
+    private int flowerClosingRemainingTicks;
+    private Matrix4x4 flowerMatrix;
+    private int flowerOpeningTicks;
+    private Vector3 flowerScale = new(0f, 1f, 0f);
 
     // Flower state.
-    public FlowerState flowerState = FlowerState.closed;
+    private FlowerState flowerState = FlowerState.closed;
 
-    public int nextLongTick = GenTicks.TickLongInterval;
-    public int nextNearbyPawnCheckTick;
+    private int nextLongTick = GenTicks.TickLongInterval;
+    private int nextNearbyPawnCheckTick;
 
     // ===================== Saving =====================
     /// <summary>
@@ -68,7 +60,7 @@ public class ClusterPlant_DevilTongue : ClusterPlant
     ///     - look for nearby pawn: if any is found, close flower and glower.
     ///     - when pawn is away, re-open flower after a delay.
     /// </summary>
-    public override void Tick()
+    protected override void Tick()
     {
         if (Find.TickManager.TicksGame >= nextLongTick)
         {
@@ -94,56 +86,56 @@ public class ClusterPlant_DevilTongue : ClusterPlant
                     break;
                 }
 
-                LookForNearbyPawnWhenClosed();
+                lookForNearbyPawnWhenClosed();
                 break;
             case FlowerState.opening:
-                OpenFlower();
+                openFlower();
                 break;
             case FlowerState.opened:
                 if (IsInCryostasis)
                 {
-                    TransitionToClosing();
+                    transitionToClosing();
                     break;
                 }
 
-                LookForNearbyPawnWhenOpened();
+                lookForNearbyPawnWhenOpened();
                 break;
             case FlowerState.closing:
-                CloseFlower();
+                closeFlower();
                 break;
         }
     }
 
-    protected void LookForNearbyPawnWhenClosed()
+    private void lookForNearbyPawnWhenClosed()
     {
         if (Find.TickManager.TicksGame < nextNearbyPawnCheckTick)
         {
             return;
         }
 
-        if (IsPawnNearby())
+        if (isPawnNearby())
         {
             nextNearbyPawnCheckTick = Find.TickManager.TicksGame + pawnDetectionPeriodWhenClosedInTicks;
         }
         else
         {
-            TransitionToOpening();
+            transitionToOpening();
         }
     }
 
-    protected void TransitionToOpening()
+    private void transitionToOpening()
     {
         flowerScale = new Vector3(0f, 1f, 0f);
         flowerOpeningTicks = 0;
         flowerState = FlowerState.opening;
     }
 
-    protected void OpenFlower()
+    private void openFlower()
     {
         flowerOpeningTicks++;
         if (flowerOpeningTicks >= flowerOpeningDurationInTicks)
         {
-            TransitionToOpened();
+            transitionToOpened();
         }
 
         var scale = flowerOpeningTicks / (float)flowerOpeningDurationInTicks;
@@ -154,22 +146,22 @@ public class ClusterPlant_DevilTongue : ClusterPlant
         flowerScale.z = scale;
     }
 
-    protected void TransitionToOpened()
+    private void transitionToOpened()
     {
         glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerStaticDef(def), Position, Map);
         flowerState = FlowerState.opened;
     }
 
-    protected void LookForNearbyPawnWhenOpened()
+    private void lookForNearbyPawnWhenOpened()
     {
         if (Find.TickManager.TicksGame < nextNearbyPawnCheckTick)
         {
             return;
         }
 
-        if (IsPawnNearby())
+        if (isPawnNearby())
         {
-            TransitionToClosing();
+            transitionToClosing();
         }
         else
         {
@@ -177,7 +169,7 @@ public class ClusterPlant_DevilTongue : ClusterPlant
         }
     }
 
-    protected bool IsPawnNearby()
+    private bool isPawnNearby()
     {
         foreach (var pawn in Map.mapPawns.AllPawns)
         {
@@ -190,19 +182,19 @@ public class ClusterPlant_DevilTongue : ClusterPlant
         return false;
     }
 
-    protected void TransitionToClosing()
+    private void transitionToClosing()
     {
         TryToDestroyGlower();
         flowerClosingRemainingTicks = flowerClosingDurationInTicks;
         flowerState = FlowerState.closing;
     }
 
-    protected void CloseFlower()
+    private void closeFlower()
     {
         flowerClosingRemainingTicks--;
         if (flowerClosingRemainingTicks <= 0)
         {
-            TransitionToClosed();
+            transitionToClosed();
         }
 
         var scale = flowerClosingRemainingTicks / (float)flowerClosingDurationInTicks;
@@ -210,7 +202,7 @@ public class ClusterPlant_DevilTongue : ClusterPlant
         flowerScale.z = scale;
     }
 
-    protected void TransitionToClosed()
+    private void transitionToClosed()
     {
         nextNearbyPawnCheckTick = Find.TickManager.TicksGame + pawnDetectionPeriodWhenClosedInTicks;
         flowerState = FlowerState.closed;
@@ -227,5 +219,13 @@ public class ClusterPlant_DevilTongue : ClusterPlant
         flowerMatrix.SetTRS(drawLoc + Altitudes.AltIncVect + new Vector3(0f, -0.1f, 0f), 0f.ToQuat(),
             flowerScale);
         Graphics.DrawMesh(MeshPool.plane10, flowerMatrix, flowerTexture, 0);
+    }
+
+    private enum FlowerState
+    {
+        closed,
+        opening,
+        opened,
+        closing
     }
 }
