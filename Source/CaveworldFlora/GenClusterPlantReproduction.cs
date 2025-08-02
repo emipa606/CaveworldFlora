@@ -45,7 +45,8 @@ public static class GenClusterPlantReproduction
     /// <summary>
     ///     Try to spawn another plant in this cluster.
     /// </summary>
-    public static void TryGrowCluster(Cluster cluster, bool checkTemperature = true)
+    public static void TryGrowCluster(Cluster cluster, bool checkTemperature = true,
+        FloatRange startingGrowth = default)
     {
         if (cluster.actualSize >= cluster.desiredSize)
         {
@@ -66,6 +67,11 @@ public static class GenClusterPlantReproduction
         }
 
         newPlant.cluster = cluster;
+        if (startingGrowth != default)
+        {
+            newPlant.Growth = startingGrowth.RandomInRange;
+        }
+
         cluster.NotifyPlantAdded();
         if (!cluster.plantDef.isSymbiosisPlant)
         {
@@ -287,12 +293,12 @@ public static class GenClusterPlantReproduction
         return PlantUtility.SnowAllowsPlanting(position, map);
     }
 
-    public static void TrySpawnNewSymbiosisCluster(Cluster cluster)
+    public static ClusterPlant TrySpawnNewSymbiosisCluster(Cluster cluster, FloatRange startingSize = default)
     {
         // Check there is not already a symbiosis cluster.
         if (cluster.symbiosisCluster != null)
         {
-            return;
+            return null;
         }
 
         foreach (var cell in GenRadial
@@ -314,7 +320,14 @@ public static class GenClusterPlantReproduction
                 cluster.plantDef.symbiosisPlantDefEvolution.clusterSizeRange.RandomInRange);
             cluster.NotifySymbiosisClusterAdded(symbiosisPlant.cluster);
 
-            return;
+            if (startingSize != default)
+            {
+                symbiosisPlant.Growth = startingSize.RandomInRange;
+            }
+
+            return symbiosisPlant;
         }
+
+        return null;
     }
 }

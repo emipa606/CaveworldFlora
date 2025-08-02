@@ -3,12 +3,13 @@
   "CanAdd": "0",
   "CanRemove": "2",
   "PreviewVersion": "1.6",
-  "LastXmlCleaning": "2025-07-03T21:14:17.5238601+02:00",
+  "LastXmlCleaning": "2025-08-02T23:46:33.8001218+02:00",
   "SocialImageSet": true,
   "Patches": false,
   "Defs": true,
   "Assemblies": true,
-  "LinesOfCode": 63306.0,
-  "LinesOfXML": 46266.0,
-  "SearchTags": " cave biome"
+  "LinesOfCode": 63694,
+  "LinesOfXML": 46266,
+  "SearchTags": " cave biome",
+  "CodeBaseSize": 79
 }
