@@ -17,7 +17,6 @@ namespace CaveworldFlora;
 /// </permission>
 public class MapComponent_ClusterPlant(Map map) : MapComponent(map)
 {
-    private List<ThingDef_ClusterPlant> cavePlantDefsInternal;
     private int nextRandomSpawnTick = 10;
     private int randomSpawnPeriodInTicks;
 
@@ -25,12 +24,12 @@ public class MapComponent_ClusterPlant(Map map) : MapComponent(map)
     {
         get
         {
-            if (!cavePlantDefsInternal.NullOrEmpty())
+            if (!field.NullOrEmpty())
             {
-                return cavePlantDefsInternal;
+                return field;
             }
 
-            cavePlantDefsInternal = [];
+            field = [];
             foreach (var plantDef in DefDatabase<ThingDef>.AllDefs)
             {
                 if (plantDef.category != ThingCategory.Plant)
@@ -42,11 +41,11 @@ public class MapComponent_ClusterPlant(Map map) : MapComponent(map)
                     (!clusterPlantDef.growsOnlyInCaveBiome
                      || map.Biome.defName == "Cave"))
                 {
-                    cavePlantDefsInternal.Add(clusterPlantDef);
+                    field.Add(clusterPlantDef);
                 }
             }
 
-            return cavePlantDefsInternal;
+            return field;
         }
     }
 

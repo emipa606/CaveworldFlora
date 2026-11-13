@@ -19,11 +19,11 @@ namespace CaveworldFlora;
 /// </permission>
 public class ClusterPlant_BlackLotus : ClusterPlant
 {
-    public const float poisonRadius = 7f;
-    public const float minGrowthToPoison = 0.3f;
-    public static bool alertHasBeenSent;
+    private const float poisonRadius = 7f;
+    private const float minGrowthToPoison = 0.3f;
+    private static bool alertHasBeenSent;
 
-    public int nextLongTick = GenTicks.TickLongInterval;
+    private int nextLongTick = GenTicks.TickLongInterval;
 
     // ===================== Saving =====================
     /// <summary>

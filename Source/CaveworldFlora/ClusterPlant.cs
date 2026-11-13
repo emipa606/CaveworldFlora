@@ -19,8 +19,6 @@ namespace CaveworldFlora;
 /// </permission>
 public class ClusterPlant : Plant
 {
-    // TODO: use compFlickable instead of spawning glower buildings.
-
     public const float minGrowthToReproduce = 0.6f;
     private string cachedLabelMouseover;
 
@@ -39,7 +37,7 @@ public class ClusterPlant : Plant
     private bool IsFertilityConditionOk => FertilityGrowthRateFactor > 0f;
 
     // Temperature.
-    public bool IsInCryostasis => Position.GetTemperature(Map) < ClusterPlantProps.minGrowTemperature;
+    protected bool IsInCryostasis => Position.GetTemperature(Map) < ClusterPlantProps.minGrowTemperature;
 
     private float TemperatureGrowthRateFactor
     {
@@ -449,12 +447,9 @@ public class ClusterPlant : Plant
                         }
                     }
 
-                    if (ClusterPlantProps.growOnlyUndeRoof)
+                    if (ClusterPlantProps.growOnlyUndeRoof && !Map.roofGrid.Roofed(Position))
                     {
-                        if (!Map.roofGrid.Roofed(Position))
-                        {
-                            stringBuilder.Append(", " + "CaveworldFlora.Unroofed".Translate());
-                        }
+                        stringBuilder.Append(", " + "CaveworldFlora.Unroofed".Translate());
                     }
 
                     if (IsOnCavePlantGrower)
@@ -474,12 +469,9 @@ public class ClusterPlant : Plant
                         stringBuilder.Append(", " + "CaveworldFlora.UnadaptedSoil".Translate());
                     }
 
-                    if (ClusterPlantProps.growOnlyNearNaturalRock)
+                    if (ClusterPlantProps.growOnlyNearNaturalRock && !IsCellNearNaturalRockBlock)
                     {
-                        if (!IsCellNearNaturalRockBlock)
-                        {
-                            stringBuilder.Append(", " + "CaveworldFlora.TooFarFromRock".Translate());
-                        }
+                        stringBuilder.Append(", " + "CaveworldFlora.TooFarFromRock".Translate());
                     }
 
                     if (cluster.DestroyedOrNull())

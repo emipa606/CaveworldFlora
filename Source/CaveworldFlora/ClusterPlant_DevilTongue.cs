@@ -171,15 +171,7 @@ public class ClusterPlant_DevilTongue : ClusterPlant
 
     private bool isPawnNearby()
     {
-        foreach (var pawn in Map.mapPawns.AllPawns)
-        {
-            if (pawn.Position.InHorDistOf(Position, pawnDetectionRadius))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return Map.mapPawns.AllPawns.Any(pawn => pawn.Position.InHorDistOf(Position, pawnDetectionRadius));
     }
 
     private void transitionToClosing()

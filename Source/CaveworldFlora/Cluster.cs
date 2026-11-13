@@ -19,8 +19,8 @@ public class Cluster : Plant
     // Size and next reproduction tick.
     public int actualSize;
     public int desiredSize;
-    public int nextGrownTick;
-    public int nextReproductionTick;
+    private int nextGrownTick;
+    private int nextReproductionTick;
 
     // Plant def.
     public ThingDef_ClusterPlant plantDef;

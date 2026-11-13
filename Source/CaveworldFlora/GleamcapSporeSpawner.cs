@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using System.Linq;
+using RimWorld;
 using Verse;
 // RimWorld specific functions are found here
 // RimWorld universal objects are here
@@ -65,12 +66,10 @@ public class GleamcapSporeSpawner : Building
         if (Find.TickManager.TicksGame > nextNearbyPawnCheckTick)
         {
             nextNearbyPawnCheckTick = Find.TickManager.TicksGame + GenTicks.TicksPerRealSecond;
-            foreach (var pawn in Map.mapPawns.AllPawns)
+            foreach (var pawn in Map.mapPawns.AllPawns.Where(pawn =>
+                         pawn.Position.InHorDistOf(Position, sporeEffectRadius)))
             {
-                if (pawn.Position.InHorDistOf(Position, sporeEffectRadius))
-                {
-                    pawn.health?.AddHediff(Util_CaveworldFlora.GleamcapSmokeDef);
-                }
+                pawn.health?.AddHediff(Util_CaveworldFlora.GleamcapSmokeDef);
             }
         }
 

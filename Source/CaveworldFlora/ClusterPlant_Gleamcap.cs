@@ -79,9 +79,6 @@ public class ClusterPlant_Gleamcap : ClusterPlant
         sporeSpawner =
             ThingMaker.MakeThing(Util_CaveworldFlora.GleamcapSporeSpawnerDef) as GleamcapSporeSpawner;
         GenSpawn.Spawn(sporeSpawner, Position, Map);
-        if (sporeSpawner != null)
-        {
-            sporeSpawner.parent = this;
-        }
+        sporeSpawner?.parent = this;
     }
 }

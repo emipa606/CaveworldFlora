@@ -3,4 +3,36 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="CaveworldFlora/CaveworldFlora.csproj" />
+  <Folder Name="/.github/">
+    <File Path="../.github/copilot-instructions.md" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/HediffDefs/">
+    <File Path="../1.7/Defs/HediffDefs/Hediffs_BreathedGleamcap.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/Things_Special/">
+    <File Path="../1.7/Defs/Things_Special/Things_Special_Cluster.xml" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/ResearchProjectDefs/">
+    <File Path="../1.7/Defs/ResearchProjectDefs/ResearchProject_Fungiponics.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/Effects/">
+    <File Path="../1.7/Defs/Effects/Mote_Visual.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/ThoughtDefs/">
+    <File Path="../1.7/Defs/ThoughtDefs/Thoughts_Memories_CavePlant.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/CaveworldFlora_Strings.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/ThingDefs/">
+    <File Path="../1.7/Defs/ThingDefs/Building_FungiponicsBasin.xml" />
+    <File Path="../1.7/Defs/ThingDefs/Building_PlantDynamicGlowers.xml" />
+    <File Path="../1.7/Defs/ThingDefs/Buildings_PlantStaticGlowers.xml" />
+    <File Path="../1.7/Defs/ThingDefs/Items_Resource_Organic.xml" />
+    <File Path="../1.7/Defs/ThingDefs/Plants_Wild_CaveMushrooms.xml" />
+    <File Path="../1.7/Defs/ThingDefs/Plants_Wild_CavePlants.xml" />
+  </Folder>
 </Solution>

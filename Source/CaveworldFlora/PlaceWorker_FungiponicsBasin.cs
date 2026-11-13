@@ -59,12 +59,9 @@ public class PlaceWorker_FungiponicsBasin : PlaceWorker
             fungiponicsBasinsList.Add(basin);
         }
 
-        foreach (var basin in fungiponicsBasinsList)
+        if (fungiponicsBasinsList.Any(basin => basin.Position.InHorDistOf(loc, minDistanceBetweenFungiponicsBasins)))
         {
-            if (basin.Position.InHorDistOf(loc, minDistanceBetweenFungiponicsBasins))
-            {
-                return new AcceptanceReport("CaveworldFlora.TooClose".Translate());
-            }
+            return new AcceptanceReport("CaveworldFlora.TooClose".Translate());
         }
 
         return true;
